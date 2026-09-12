@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in · Acme</title>
+    <!-- Google Font (Inter) for a modern look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons (optional but clean) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reset & base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(145deg, #f7f9fc 0%, #eef2f7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            margin: 0;
+            line-height: 1.5;
+            color: #1e293b;
+        }
+
+        /* Card container */
+        .login-card {
+            background: #ffffff;
+            max-width: 440px;
+            width: 100%;
+            padding: 2.5rem 2.25rem;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 8px 20px -8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(2px);
+        }
+
+        /* Header area */
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            border-radius: 16px;
+            color: white;
+            font-size: 1.75rem;
+            box-shadow: 0 10px 20px -8px rgba(37, 99, 235, 0.35);
+            margin-bottom: 1.25rem;
+        }
+
+        .login-header h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #0f172a;
+            margin-bottom: 0.4rem;
+        }
+
+        .login-header p {
+            color: #64748b;
+            font-size: 0.95rem;
+            font-weight: 400;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 1rem;
+            color: #94a3b8;
+            font-size: 1rem;
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 2.8rem;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            background: #ffffff;
+            color: #0f172a;
+            outline: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        .input-wrapper input::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+
+        .input-wrapper input:hover {
+            border-color: #cbd5e1;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .input-wrapper input:focus + i,
+        .input-wrapper input:focus ~ i {
+            color: #2563eb;
+        }
+
+        /* Password toggle icon (optional) – using a small button */
+        .password-toggle {
+            position: absolute;
+            right: 0.9rem;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+            border-radius: 50%;
+        }
+
+        .password-toggle:hover {
+            color: #475569;
+        }
+
+        /* Options row: remember me + forgot password */
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #334155;
+            cursor: pointer;
+        }
+
+        .remember input[type="checkbox"] {
+            width: 1.05rem;
+            height: 1.05rem;
+            accent-color: #2563eb;
+            border-radius: 4px;
+            border: 1.5px solid #cbd5e1;
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            font-size: 0.9rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .forgot-link:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+
+        /* Submit button */
+        .btn-login {
+            width: 100%;
+            padding: 0.95rem 1.5rem;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 12px 24px -12px rgba(37, 99, 235, 0.4);
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+            box-shadow: 0 16px 28px -12px rgba(37, 99, 235, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 14px -8px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Divider / sign-up prompt */
+        .signup-prompt {
+            text-align: center;
+            margin-top: 1.75rem;
+            font-size: 0.925rem;
+            color: #475569;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.75rem;
+        }
+
+        .signup-prompt a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 0.25rem;
+            transition: color 0.2s;
+        }
+
+        .signup-prompt a:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 2rem 1.5rem;
+                border-radius: 1.75rem;
+            }
+
+            .login-header h1 {
+                font-size: 1.7rem;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .forgot-link {
+                align-self: flex-start;
+            }
+
+            .input-wrapper input {
+                padding: 0.85rem 1rem 0.85rem 2.6rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <!-- Header with logo and greeting -->
+        <div class="login-header">
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h1>Welcome back</h1>
+            <p>Sign in to your account to continue</p>
+        </div>
+
+        <!-- Login form -->
+        <form action="#" method="post" id="loginForm">
+            <!-- Email field -->
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+                </div>
+            </div>
+
+            <!-- Password field with toggle (eye icon) -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+                    <button type="button" class="password-toggle" id="togglePassword" aria-label="Show password">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Remember & Forgot -->
+            <div class="form-options">
+                <label class="remember">
+                    <input type="checkbox" name="remember" id="remember">
+                    <span>Remember me</span>
+                </label>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn-login">
+                <i class="fas fa-arrow-right-to-bracket"></i> Sign in
+            </button>
+        </form>
+
+        <!-- Sign up prompt -->
+        <div class="signup-prompt">
+            Don't have an account? <a href="#">Create one</a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Password visibility toggle
+            const toggleBtn = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            
+            if (toggleBtn && passwordInput) {
+                toggleBtn.addEventListener('click', function() {
+                    // Toggle type between password and text
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    // Update icon (eye / eye-slash)
+                    const icon = this.querySelector('i');
+                    if (type === 'text') {
+                        icon.classList.remove('far', 'fa-eye');
+                        icon.classList.add('far', 'fa-eye-slash');
+                        this.setAttribute('aria-label', 'Hide password');
+                    } else {
+                        icon.classList.remove('far', 'fa-eye-slash');
+                        icon.classList.add('far', 'fa-eye');
+                        this.setAttribute('aria-label', 'Show password');
+                    }
+                });
+            }
+
+            // Optional: prevent form from actually submitting (for demo)
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // Here you would normally send data to server
+                    alert('Demo: login form submitted. (No actual authentication)');
+                });
+            }
+
+            // Small UX: focus on email field when page loads (optional)
+            // Uncomment if you want auto-focus:
+            // document.getElementById('email')?.focus();
+        })();
+    </script>
+</body>
+</html>
